@@ -1,0 +1,29 @@
+# Apache server
+upstream django {
+    server         domain.com:9000;
+}
+
+# Redirect all requests on the www subdomain to the root domain
+server {
+        listen      80;
+        server_name www.domain.com;
+        rewrite ^/(.*) http://domain.com/$1 permanent;
+}
+
+# Serve static files and redirect any other request to Apache
+server {
+        listen       80;
+        server_name  domain.com;
+        root        /var/www/domain.com/;
+        access_log  /var/log/nginx/domain.com.access.log;
+        
+        proxy_redirect     off;
+        proxy_set_header   Host             $host;
+        proxy_set_header   X-Real-IP        $remote_addr;
+        proxy_set_header   X-Forwarded-For  $proxy_add_x_forwarded_for;
+
+        if (!-f $request_filename) {
+                proxy_pass         http://django;
+        }
+}
+

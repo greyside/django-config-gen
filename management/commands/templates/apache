@@ -1,0 +1,30 @@
+<VirtualHost *:80>
+	ServerAdmin {{ADMINS.0.1}}
+
+	Alias /robots.txt {{MEDIA_ROOT}}/robots.txt
+	Alias /favicon.ico {{MEDIA_ROOT}}/favicon.ico
+
+	Alias {{MEDIA_URL}} {{MEDIA_ROOT}}/
+	Alias {{ADMIN_MEDIA_PREFIX}} {{PROJECT_ROOT}}{{ADMIN_MEDIA_PREFIX}}
+
+	<Directory {{MEDIA_ROOT}}>
+	Order deny,allow
+	Allow from all
+	</Directory>
+
+	WSGIScriptAlias / {{PROJECT_ROOT}}/config/generated/django.wsgi
+
+	<Directory {{PROJECT_ROOT}}/config>
+	Order allow,deny
+	Allow from all
+	</Directory>
+
+	ErrorLog {{PROJECT_ROOT}}/logs/apache2_error.log
+
+	# Possible values include: debug, info, notice, warn, error, crit,
+	# alert, emerg.
+	LogLevel debug
+
+	CustomLog {{PROJECT_ROOT}}/logs/apache2_access.log combined
+
+</VirtualHost>

@@ -28,11 +28,11 @@ server {
 	}
 	
 	location {{MEDIA_URL}} {
-		root {{PROJECT_ROOT}}
+		root {{PROJECT_ROOT}};
 	}
 	{% if not ADMIN_MEDIA_IN_MEDIA %}
 	location {{ADMIN_MEDIA_PREFIX}} {
-		root {{PROJECT_ROOT}}
+		root {{PROJECT_ROOT}};
 	}
 	{% endif %}
 }

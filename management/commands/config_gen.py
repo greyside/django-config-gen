@@ -24,6 +24,9 @@ if not hasattr(settings, 'CONFIG_GEN_TEMPLATES_DIR'):
 if not hasattr(settings, 'CONFIG_GEN_GENERATED_DIR'):
 	settings.CONFIG_GEN_GENERATED_DIR = defaults.GENERATED_DIR
 
+if not hasattr(settings, 'HOST'):
+	settings.HOST = defaults.HOST
+
 TEMPLATES_DIR = settings.CONFIG_GEN_TEMPLATES_DIR
 logger.debug(TEMPLATES_DIR)
 GENERATED_DIR = settings.CONFIG_GEN_GENERATED_DIR

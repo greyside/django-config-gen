@@ -1,11 +1,12 @@
+# Based on http://lincolnloop.com/django-best-practices/deployment/servers.html
 <VirtualHost *:9000>
-	ServerName domain.com
-	ServerAdmin webmaster@domain.com
+	ServerName {{HOST}}
+	ServerAdmin webmaster@{{HOST}}
 	ErrorLog {{LOG_DIR}}/apache2_error.log
 	CustomLog {{LOG_DIR}}/apache2_access.log combined
 	
-	WSGIDaemonProcess domain display-name=%{GROUP} maximum-requests=10000
-	WSGIProcessGroup domain
+	WSGIDaemonProcess {{HOST}} display-name=%{GROUP} maximum-requests=10000
+	WSGIProcessGroup {{HOST}}
 	
 	WSGIScriptAlias / {{CONFIG_GEN_GENERATED_DIR}}/django.wsgi
 	

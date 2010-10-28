@@ -1,19 +1,20 @@
+# Based on http://lincolnloop.com/django-best-practices/deployment/servers.html
 # Apache server
 upstream django {
-    server         domain.com:9000;
+    server         {{HOST}}:9000;
 }
 
 # Redirect all requests on the www subdomain to the root domain
 server {
         listen      80;
-        server_name www.domain.com;
-        rewrite ^/(.*) http://domain.com/$1 permanent;
+        server_name www.{{HOST}};
+        rewrite ^/(.*) http://{{HOST}}/$1 permanent;
 }
 
 # Serve static files and redirect any other request to Apache
 server {
         listen       80;
-        server_name  domain.com;
+        server_name  {{HOST}};
         root        {{MEDIA_ROOT}}/;
         access_log  {{LOG_DIR}}/nginx_access.log;
         

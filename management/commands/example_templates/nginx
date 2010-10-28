@@ -14,8 +14,8 @@ server {
 server {
         listen       80;
         server_name  domain.com;
-        root        /var/www/domain.com/;
-        access_log  /var/log/nginx/domain.com.access.log;
+        root        {{MEDIA_ROOT}}/;
+        access_log  {{LOG_DIR}}/nginx_access.log;
         
         proxy_redirect     off;
         proxy_set_header   Host             $host;

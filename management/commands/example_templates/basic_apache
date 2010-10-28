@@ -12,19 +12,19 @@
 	Allow from all
 	</Directory>
 
-	WSGIScriptAlias / {{PROJECT_ROOT}}/config/generated/django.wsgi
+	WSGIScriptAlias / {{CONFIG_GEN_GENERATED_DIR}}/django.wsgi
 
-	<Directory {{PROJECT_ROOT}}/config>
+	<Directory {{CONFIG_GEN_GENERATED_DIR}}>
 	Order allow,deny
 	Allow from all
 	</Directory>
 
-	ErrorLog {{PROJECT_ROOT}}/logs/apache2_error.log
+	ErrorLog {{LOG_DIR}}/apache2_error.log
 
 	# Possible values include: debug, info, notice, warn, error, crit,
 	# alert, emerg.
 	LogLevel debug
 
-	CustomLog {{PROJECT_ROOT}}/logs/apache2_access.log combined
+	CustomLog {{LOG_DIR}}/apache2_access.log combined
 
 </VirtualHost>

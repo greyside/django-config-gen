@@ -1,0 +1,17 @@
+<VirtualHost *:9000>
+	ServerName domain.com
+	ServerAdmin webmaster@domain.com
+	ErrorLog {{LOG_DIR}}/apache2_error.log
+	CustomLog {{LOG_DIR}}/apache2_access.log combined
+	
+	WSGIDaemonProcess domain display-name=%{GROUP} maximum-requests=10000
+	WSGIProcessGroup domain
+	
+	WSGIScriptAlias / {{CONFIG_GEN_GENERATED_DIR}}/django.wsgi
+	
+	<Directory {{CONFIG_GEN_GENERATED_DIR}}>
+		Order deny,allow
+		Allow from all
+	</Directory>
+</VirtualHost>
+

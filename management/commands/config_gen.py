@@ -2,12 +2,32 @@ from django.core.management.base import NoArgsCommand, CommandError
 from django.conf import settings
 from django.template.loader import render_to_string
 from django.template import Template, Context
+import defaults
 import os
+import shutil
 import logging
 
-CONFIG_DIR = settings.CONFIG_GEN_CONFIG_DIR if hasattr(settings, 'CONFIG_GEN_CONFIG_DIR') else 'config/'
-TEMPLATES_DIR = settings.CONFIG_GEN_TEMPLATES_DIR if hasattr(settings, 'CONFIG_GEN_TEMPLATES_DIR') else '%stemplates/' % CONFIG_DIR
-GENERATED_DIR = settings.CONFIG_GEN_GENERATED_DIR if hasattr(settings, 'CONFIG_GEN_GENERATED_DIR') else '%sgenerated/' % CONFIG_DIR
+logger = logging.getLogger(__name__)
+
+if not hasattr(settings, 'PROJECT_ROOT'):
+	settings.PROJECT_ROOT = defaults.PROJECT_ROOT
+
+if not hasattr(settings, 'PROJECT_PARENT_DIR'):
+	settings.PROJECT_PARENT_DIR = os.path.dirname(settings.PROJECT_ROOT)
+
+if not hasattr(settings, 'LOG_DIR'):
+	settings.LOG_DIR = defaults.LOG_DIR
+
+if not hasattr(settings, 'CONFIG_GEN_TEMPLATES_DIR'):
+	settings.CONFIG_GEN_TEMPLATES_DIR = defaults.TEMPLATES_DIR
+
+if not hasattr(settings, 'CONFIG_GEN_GENERATED_DIR'):
+	settings.CONFIG_GEN_GENERATED_DIR = defaults.GENERATED_DIR
+
+TEMPLATES_DIR = settings.CONFIG_GEN_TEMPLATES_DIR
+logger.debug(TEMPLATES_DIR)
+GENERATED_DIR = settings.CONFIG_GEN_GENERATED_DIR
+logger.debug(GENERATED_DIR)
 
 class Command(NoArgsCommand):
 	help = 'Generates configuration files for Apache, Nginx, etc. using values in settings.py and the Django template system.'
@@ -15,10 +35,7 @@ class Command(NoArgsCommand):
 	def handle_noargs(self, **options):
 		#get all templates in TEMPLATES_DIR, parse them, and output files in GENERATED_DIR
 		#logging.debug(settings)
-		ctx = Context(dict(settings._wrapped))
-		
-		if not os.path.exists(CONFIG_DIR):
-			os.makedirs(CONFIG_DIR)
+		ctx = Context(settings._wrapped.__dict__)
 		
 		if not os.path.exists(TEMPLATES_DIR):
 			os.makedirs(TEMPLATES_DIR)
@@ -27,11 +44,19 @@ class Command(NoArgsCommand):
 			os.makedirs(GENERATED_DIR)
 		
 		dir_list=os.listdir(TEMPLATES_DIR)
+		#if no templates are present, populate template directory with the examples
+		if len(dir_list) is 0:
+			logger.debug('dir_list was empty')
+			example_dir = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'example_templates')
+			for filename in os.listdir(example_dir):
+				shutil.copy2(os.path.join(example_dir, filename), TEMPLATES_DIR)
+			dir_list=os.listdir(TEMPLATES_DIR)
+		
 		for filename in dir_list:
-			fi = open('%s%s' % (TEMPLATES_DIR, filename), 'r')
+			fi = open(os.path.join(TEMPLATES_DIR, filename), 'r')
 			t = Template(fi.read())
 			fi.close()
 			
-			fo = open('%s%s' % (GENERATED_DIR, filename), 'w')
+			fo = open(os.path.join(GENERATED_DIR, filename), 'w')
 			fo.write(t.render(ctx))
 			fo.close()

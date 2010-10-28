@@ -15,7 +15,6 @@ server {
 server {
 	listen       80;
 	server_name  {{HOST}};
-	root        {{MEDIA_ROOT}}/;
 	access_log  {{LOG_DIR}}/nginx_access.log;
 	error_log   {{LOG_DIR}}/nginx_error.log warn;
 	
@@ -25,9 +24,16 @@ server {
 	proxy_set_header   X-Forwarded-For  $proxy_add_x_forwarded_for;
 	
 	location / {
-		if (!-f $request_filename) {
-			proxy_pass         http://django;
-		}
+		proxy_pass         http://django;
 	}
+	
+	location {{MEDIA_URL}} {
+		root {{PROJECT_ROOT}}
+	}
+	{% if not ADMIN_MEDIA_IN_MEDIA %}
+	location {{ADMIN_MEDIA_PREFIX}} {
+		root {{PROJECT_ROOT}}
+	}
+	{% endif %}
 }
 

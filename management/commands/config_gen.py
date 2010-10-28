@@ -27,6 +27,9 @@ if not hasattr(settings, 'CONFIG_GEN_GENERATED_DIR'):
 if not hasattr(settings, 'HOST'):
 	settings.HOST = defaults.HOST
 
+if settings.ADMIN_MEDIA_PREFIX[:len(settings.MEDIA_URL)] == settings.MEDIA_URL:
+	settings.ADMIN_MEDIA_IN_MEDIA = True
+
 TEMPLATES_DIR = settings.CONFIG_GEN_TEMPLATES_DIR
 logger.debug(TEMPLATES_DIR)
 GENERATED_DIR = settings.CONFIG_GEN_GENERATED_DIR

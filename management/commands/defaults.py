@@ -9,4 +9,4 @@ _config_dir = os.path.join(PROJECT_ROOT ,'config')
 TEMPLATES_DIR = os.path.join(_config_dir ,'templates')
 GENERATED_DIR = os.path.join(_config_dir ,'generated')
 
-HOST = Site.objects.get_current().domain
+HOST = Site.objects.get_current().domain.split(':')[0]

@@ -17,6 +17,7 @@ server {
 	server_name  {{HOST}};
 	root        {{MEDIA_ROOT}}/;
 	access_log  {{LOG_DIR}}/nginx_access.log;
+	error_log   {{LOG_DIR}}/nginx_error.log warn;
 	
 	proxy_redirect     off;
 	proxy_set_header   Host             $host;

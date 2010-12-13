@@ -2,33 +2,14 @@ from django.core.management.base import NoArgsCommand, CommandError
 from django.conf import settings
 from django.template.loader import render_to_string
 from django.template import Template, Context
-import defaults
+from .. import patch_settings
 import os
 import shutil
 import logging
 
 logger = logging.getLogger(__name__)
 
-if not hasattr(settings, 'PROJECT_ROOT'):
-	settings.PROJECT_ROOT = defaults.PROJECT_ROOT
-
-if not hasattr(settings, 'PROJECT_PARENT_DIR'):
-	settings.PROJECT_PARENT_DIR = os.path.dirname(settings.PROJECT_ROOT)
-
-if not hasattr(settings, 'LOG_DIR'):
-	settings.LOG_DIR = defaults.LOG_DIR
-
-if not hasattr(settings, 'CONFIG_GEN_TEMPLATES_DIR'):
-	settings.CONFIG_GEN_TEMPLATES_DIR = defaults.TEMPLATES_DIR
-
-if not hasattr(settings, 'CONFIG_GEN_GENERATED_DIR'):
-	settings.CONFIG_GEN_GENERATED_DIR = defaults.GENERATED_DIR
-
-if not hasattr(settings, 'HOST'):
-	settings.HOST = defaults.HOST
-
-if settings.ADMIN_MEDIA_PREFIX[:len(settings.MEDIA_URL)] == settings.MEDIA_URL:
-	settings.ADMIN_MEDIA_IN_MEDIA = True
+patch_settings()
 
 TEMPLATES_DIR = settings.CONFIG_GEN_TEMPLATES_DIR
 #logger.debug(TEMPLATES_DIR)

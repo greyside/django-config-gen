@@ -30,6 +30,7 @@ setup(name='django-config-gen',
 	url='https://github.com/SeanHayes/django-config-gen',
 	license='BSD',
 	packages=['django_config_gen'],
+	package_data={'django_config_gen': ['management/commands/example_templates/*']},
 	install_requires=['django',],
 )
 

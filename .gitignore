@@ -6,3 +6,5 @@
 .pydevproject
 .project
 *~
+dist/
+*.egg-info/

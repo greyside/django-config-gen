@@ -17,4 +17,3 @@ setup(name='django-config-gen',
 	install_requires=['django',],
 )
 
-

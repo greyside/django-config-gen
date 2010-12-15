@@ -1,0 +1,17 @@
+= Django Configuration Generator =
+
+Generates configuration files for Apache, Nginx, etc. using values in settings.py and the Django template system. You can write your own templates for whatever text based config file you need.
+
+== Usage ==
+
+Run './manage.py config_gen' on the command line in your project directory.
+
+Templates for your config files go in:
+<project_path>/config/templates/
+
+All text files in that directory are loaded with the Django template system using values from settings.py as Context. The output of each file is saved with the same filename but in the following directory:
+<project_path>/config/generated/
+
+These output directories can be customized using CONFIG_GEN_TEMPLATES_DIR and CONFIG_GEN_GENERATED_DIR in settings.py.
+
+Example templates are provided in 'django-config-gen/django_config_gen/management/commands/example_templates'. If the folder specified by CONFIG_GEN_TEMPLATES_DIR is empty then these will be copied there and used for generating templates.

@@ -3,7 +3,7 @@
 
 from setuptools import setup
 
-version = '1.0.0'
+version = '1.0.1'
 
 setup(name='django-config-gen',
 	version=version,
@@ -29,7 +29,7 @@ setup(name='django-config-gen',
 	keywords='django configuration generator',
 	url='https://github.com/SeanHayes/django-config-gen',
 	license='BSD',
-	packages=['django_config_gen'],
+	packages=['django_config_gen', 'django_config_gen.management', 'django_config_gen.management.commands'],
 	package_data={'django_config_gen': ['management/commands/example_templates/*']},
 	install_requires=['django',],
 )

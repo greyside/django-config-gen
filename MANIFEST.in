@@ -1,0 +1,1 @@
+include django_config_gen/management/commands/example_templates/*

@@ -2,11 +2,10 @@
 # -*- coding: utf-8 -*-
 
 from setuptools import setup
-
-version = '1.0.2'
+import django_config_gen
 
 setup(name='django-config-gen',
-	version=version,
+	version=django_config_gen.__version__,
 	description="Generates configuration files for Apache, Nginx, etc. using values in settings.py and the Django template system. You can write your own templates for whatever text based config file you need.",
 	author='Seán Hayes',
 	author_email='sean@seanhayes.name',

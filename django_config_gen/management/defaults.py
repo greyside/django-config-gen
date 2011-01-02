@@ -14,6 +14,10 @@ GENERATED_DIR = os.path.join(_config_dir ,'generated')
 try:
 	HOST = Site.objects.get_current().domain.split(':')[0]
 except:
-	transaction.rollback()
+	#try/except to avoid "django.db.transaction.TransactionManagementError: This code isn't under transaction management"
+	try:
+		transaction.rollback()
+	except:
+		pass
 	HOST = 'localhost'
 

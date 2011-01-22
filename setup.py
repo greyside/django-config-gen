@@ -30,6 +30,6 @@ setup(name='django-config-gen',
 	license='BSD',
 	packages=['django_config_gen', 'django_config_gen.management', 'django_config_gen.management.commands'],
 	package_data={'django_config_gen': ['management/commands/example_templates/*']},
-	install_requires=['django',],
+	install_requires=['Django>=1.2',],
 )
 

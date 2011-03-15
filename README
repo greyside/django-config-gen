@@ -35,7 +35,7 @@ HOST
 The hostname specified in your database for the current Site. If "./manage.py syncdb" hasn't been run yet, the value 'localhost' is used.
 
 = Contributing =
-You can fork this project on GitHub: http://github.com/SeanHayes/django_config-gen.
+You can fork this project on GitHub: http://github.com/SeanHayes/django-config-gen.
 
 = License =
 This project is licensed under the BSD License.

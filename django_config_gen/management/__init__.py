@@ -18,6 +18,9 @@ def patch_settings():
 	if not hasattr(settings, 'CONFIG_GEN_GENERATED_DIR'):
 		settings.CONFIG_GEN_GENERATED_DIR = defaults.GENERATED_DIR
 	
+	if not hasattr(settings, 'CONFIG_GEN_CONTEXT_PROCESSORS'):
+		settings.CONFIG_GEN_CONTEXT_PROCESSORS = defaults.CONTEXT_PROCESSORS
+	
 	if not hasattr(settings, 'HOST'):
 		settings.HOST = defaults.HOST
 	

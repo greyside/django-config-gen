@@ -25,11 +25,21 @@ The absolute path to the directory your manage.py is in.
 LOG_DIR
 A directory called 'logs/' within your PROJECT_ROOT.
 
-TEMPLATES_DIR
+CONFIG_GEN_TEMPLATES_DIR
 A directory called 'config/templates/' in your PROJECT_ROOT.
 
-GENERATED_DIR
+CONFIG_GEN_GENERATED_DIR
 A directory called 'config/generated/' in your PROJECT_ROOT.
+
+CONFIG_GEN_CONTEXT_PROCESSORS
+A list of custom context processors that are to be used when rendering config files. Example:
+
+settings.py:
+CONFIG_GEN_CONTEXT_PROCESSORS = ['myapp.config_context_processors.foo']
+
+myapp/config_context_processors.py:
+def foo(*args, **kwargs):
+	return {'foo': 'bar'}
 
 HOST
 The hostname specified in your database for the current Site. If "./manage.py syncdb" hasn't been run yet, the value 'localhost' is used.

@@ -2,6 +2,8 @@ from django.core.management.base import NoArgsCommand, CommandError
 from django.conf import settings
 from django.template.loader import render_to_string
 from django.template import Template, Context
+from django.core.exceptions import ImproperlyConfigured
+from django.utils.importlib import import_module
 from .. import patch_settings
 import os
 import shutil
@@ -15,6 +17,7 @@ TEMPLATES_DIR = settings.CONFIG_GEN_TEMPLATES_DIR
 #logger.debug(TEMPLATES_DIR)
 GENERATED_DIR = settings.CONFIG_GEN_GENERATED_DIR
 #logger.debug(GENERATED_DIR)
+CONTEXT_PROCESSORS = settings.CONFIG_GEN_CONTEXT_PROCESSORS
 
 class Command(NoArgsCommand):
 	help = 'Generates configuration files for Apache, Nginx, etc. using values in settings.py and the Django template system.'
@@ -24,6 +27,25 @@ class Command(NoArgsCommand):
 		#get all templates in TEMPLATES_DIR, parse them, and output files in GENERATED_DIR
 		#logging.debug(settings)
 		self.ctx = Context(settings._wrapped.__dict__)
+		
+		#run context processors
+		for path in CONTEXT_PROCESSORS:
+			logger.debug('Processing Context Processor: %s' % path)
+			#these next 10 lines were taken from Django (file: django/template/context.py), which is under a BSD license
+			i = path.rfind('.')
+			module, attr = path[:i], path[i+1:]
+			try:
+				mod = import_module(module)
+			except ImportError, e:
+				raise ImproperlyConfigured('Error importing config processor module %s: "%s"' % (module, e))
+			try:
+				func = getattr(mod, attr)
+			except AttributeError:
+				raise ImproperlyConfigured('Module "%s" does not define a "%s" callable request processor' % (module, attr))
+			
+			d = func()
+			logger.debug(d)
+			self.ctx.update(d)
 		
 		if not os.path.exists(TEMPLATES_DIR):
 			os.makedirs(TEMPLATES_DIR)
@@ -40,6 +62,7 @@ class Command(NoArgsCommand):
 				shutil.copy2(os.path.join(example_dir, filename), TEMPLATES_DIR)
 			dir_list=os.listdir(TEMPLATES_DIR)
 		
+		logger.debug(self.ctx)
 		self.create_nodes('', dir_list)
 	
 	def create_nodes(self, rel_path, dir_list):

@@ -17,7 +17,7 @@ These output directories can be customized using CONFIG_GEN_TEMPLATES_DIR and CO
 Example templates are provided in 'django-config-gen/django_config_gen/management/commands/example_templates'. If the folder specified by CONFIG_GEN_TEMPLATES_DIR is empty then these will be copied there and used for generating templates.
 
 = Default Variables =
-Some default variables are used in the Context used to render the config files.
+Some default variables are used in the Context used to render the config files, and they can be manually overridden in settings.py.
 
 PROJECT_ROOT
 The absolute path to the directory your manage.py is in.
@@ -40,6 +40,8 @@ CONFIG_GEN_CONTEXT_PROCESSORS = ['myapp.config_context_processors.foo']
 myapp/config_context_processors.py:
 def foo(*args, **kwargs):
 	return {'foo': 'bar'}
+
+Nothing is currently passed in to the context processors but that may change in the future, so using *args and **kwargs in the method signature will help ensure forward compatibility.
 
 HOST
 The hostname specified in your database for the current Site. If "./manage.py syncdb" hasn't been run yet, the value 'localhost' is used.

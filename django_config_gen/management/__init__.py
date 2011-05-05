@@ -23,6 +23,3 @@ def patch_settings():
 	
 	if not hasattr(settings, 'HOST'):
 		settings.HOST = defaults.HOST
-	
-	if settings.ADMIN_MEDIA_PREFIX[:len(settings.MEDIA_URL)] == settings.MEDIA_URL:
-		settings.ADMIN_MEDIA_IN_MEDIA = True

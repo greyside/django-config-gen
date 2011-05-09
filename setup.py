@@ -26,10 +26,14 @@ setup(name='django-config-gen',
 		"Topic :: Software Development :: Libraries :: Python Modules"
 	],
 	keywords='django configuration generator',
-	url='https://github.com/SeanHayes/django-config-gen',
+	url='http://seanhayes.name/',
+	download_url='https://github.com/SeanHayes/django-config-gen',
 	license='BSD',
-	packages=['django_config_gen', 'django_config_gen.management', 'django_config_gen.management.commands'],
+	packages=[
+		'django_config_gen',
+	],
 	package_data={'django_config_gen': ['management/commands/example_templates/*']},
+	include_package_data=True,
 	install_requires=['Django>=1.2',],
 )
 

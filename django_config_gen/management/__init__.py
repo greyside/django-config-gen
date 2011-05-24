@@ -1,3 +1,8 @@
+# -*- coding: utf-8 -*-
+#Copyright (C) 2010, 2011 Seán Hayes
+#
+#Licensed under a BSD 3-Clause License. See LICENSE file.
+
 from django.conf import settings
 import os
 import defaults

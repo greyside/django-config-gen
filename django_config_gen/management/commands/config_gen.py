@@ -1,3 +1,8 @@
+# -*- coding: utf-8 -*-
+#Copyright (C) 2010, 2011 Seán Hayes
+#
+#Licensed under a BSD 3-Clause License. See LICENSE file.
+
 from django.core.management.base import NoArgsCommand, CommandError
 from django.conf import settings
 from django.template.loader import render_to_string
@@ -76,7 +81,8 @@ class Command(NoArgsCommand):
 				fi.close()
 			
 				fo = open(g_filename, 'w')
-				fo.write(t.render(self.ctx))
+				generated_text = t.render(self.ctx).encode('utf-8')
+				fo.write(generated_text)
 				fo.close()
 			elif os.path.isdir(t_filename):
 				if not os.path.exists(g_filename):

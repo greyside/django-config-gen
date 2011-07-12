@@ -2,6 +2,11 @@
 
 Generates configuration files for Apache, Nginx, etc. using values in settings.py and the Django template system. You can write your own templates for whatever text based config file you need.
 
+== Install ==
+1. Install package via your preferred Python package manager (pip, setuptools, etc.).
+
+2. Add 'django_config_gen' to your INSTALLED_APPS.
+
 == Usage ==
 
 Run './manage.py config_gen' on the command line in your project directory.

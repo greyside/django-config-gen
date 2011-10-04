@@ -60,6 +60,7 @@ class Command(NoArgsCommand):
 		
 		dir_list=os.listdir(TEMPLATES_DIR)
 		#if no templates are present, populate template directory with the examples
+
 		if len(dir_list) is 0:
 			logger.debug('%s was empty' % TEMPLATES_DIR)
 			example_dir = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'example_templates')
@@ -68,24 +69,33 @@ class Command(NoArgsCommand):
 			dir_list=os.listdir(TEMPLATES_DIR)
 		
 		logger.debug(self.ctx)
-		self.create_nodes('', dir_list)
-	
-	def create_nodes(self, rel_path, dir_list):
-		for filename in dir_list:
-			logger.debug('Filename: %s' % filename)
-			t_filename = os.path.join(TEMPLATES_DIR, rel_path, filename)
-			g_filename = os.path.join(GENERATED_DIR, rel_path, filename)
-			if os.path.isfile(t_filename):
-				fi = open(t_filename, 'r')
-				t = Template(fi.read())
-				fi.close()
+		self.create_nodes(TEMPLATES_DIR)
+
+	def render_template(self, source, target):
+		fi = open(source, 'r')
+		t = Template(fi.read())
+		fi.close()
 			
-				fo = open(g_filename, 'w')
-				generated_text = t.render(self.ctx).encode('utf-8')
-				fo.write(generated_text)
-				fo.close()
-			elif os.path.isdir(t_filename):
-				if not os.path.exists(g_filename):
-					logger.debug('Creating directory')
-					os.mkdir(g_filename)
-				self.create_nodes(filename, os.listdir(t_filename))
+		fo = open(target, 'w')
+		generated_text = t.render(self.ctx).encode('utf-8')
+		fo.write(generated_text)
+		fo.close()
+	
+	def create_nodes(self, path):
+		for root, dirs, files in os.walk(path):
+			for dirname in dirs:
+				source = os.path.join(root, dirname)
+				target = source.replace(TEMPLATES_DIR, GENERATED_DIR)
+
+				if not os.path.exists(target):
+				    os.makedirs(target)
+
+			for filename in files:
+				source = os.path.join(root, filename)
+				target = source.replace(TEMPLATES_DIR, GENERATED_DIR)
+				dirname = os.path.dirname(source)
+
+				if not os.path.exists(dirname):
+					os.makedirs(dirname)
+				self.render_template(source, target)
+				

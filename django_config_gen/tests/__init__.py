@@ -99,10 +99,10 @@ This is some text with unicode!
 		
 	
 	def tearDown(self):
-		#for tmp_file in self.tmp_files:
-		#	os.remove(tmp_file)
+		for tmp_file in self.tmp_files:
+			os.remove(tmp_file)
 		
-		#shutil.rmtree(self.config_dir)
+		shutil.rmtree(self.config_dir)
 		
 		if hasattr(self, 'old_CONFIG_GEN_TEMPLATES_DIR'):
 			settings.CONFIG_GEN_TEMPLATES_DIR = self.old_CONFIG_GEN_TEMPLATES_DIR

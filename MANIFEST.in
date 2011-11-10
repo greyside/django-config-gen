@@ -1,3 +1,4 @@
 include django_config_gen/management/commands/example_templates/*
+include AUTHORS
 include LICENSE
 include README

@@ -5,7 +5,6 @@
 
 from django.core.management.base import NoArgsCommand, CommandError
 from django.conf import settings
-from django.template.loader import render_to_string
 from django.template import Template, Context
 from django.core.exceptions import ImproperlyConfigured
 from django.utils.importlib import import_module
@@ -75,7 +74,7 @@ class Command(NoArgsCommand):
 		fi = open(source, 'r')
 		t = Template(fi.read())
 		fi.close()
-			
+		
 		fo = open(target, 'w')
 		generated_text = t.render(self.ctx).encode('utf-8')
 		fo.write(generated_text)
@@ -88,7 +87,7 @@ class Command(NoArgsCommand):
 				target = source.replace(TEMPLATES_DIR, GENERATED_DIR)
 
 				if not os.path.exists(target):
-				    os.makedirs(target)
+					os.makedirs(target)
 
 			for filename in files:
 				source = os.path.join(root, filename)

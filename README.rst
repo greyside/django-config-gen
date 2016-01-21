@@ -10,12 +10,12 @@ django-config-gen
     :target: https://coveralls.io/github/greyside/django-config-gen
     :alt: Code Coverage
 
-.. image:: https://img.shields.io/pypi/v/django-tastypie.svg
-    :target: https://pypi.python.org/pypi/django-tastypie
+.. image:: https://img.shields.io/pypi/v/django-config-gen.svg
+    :target: https://pypi.python.org/pypi/django-config-gen
     :alt: Version
 
-.. image:: https://img.shields.io/pypi/dm/django-tastypie.svg
-    :target: https://pypi.python.org/pypi/django-tastypie
+.. image:: https://img.shields.io/pypi/dm/django-config-gen.svg
+    :target: https://pypi.python.org/pypi/django-config-gen
     :alt: Downloads
 
 Generates configuration files for Apache, Nginx, etc. using values in

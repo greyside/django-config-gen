@@ -8,24 +8,18 @@ import os
 from . import defaults
 
 
+_names = {
+    'PROJECT_ROOT': 'PROJECT_ROOT',
+    'PROJECT_PARENT_DIR': 'PROJECT_ROOT',
+    'LOG_DIR': 'LOG_DIR',
+    'CONFIG_GEN_TEMPLATES_DIR': 'TEMPLATES_DIR',
+    'CONFIG_GEN_GENERATED_DIR': 'GENERATED_DIR',
+    'CONFIG_GEN_CONTEXT_PROCESSORS': 'CONTEXT_PROCESSORS',
+    'HOST': 'HOST',
+}
+
+
 def patch_settings():
-    if not hasattr(settings, 'PROJECT_ROOT'):
-        settings.PROJECT_ROOT = defaults.PROJECT_ROOT
-
-    if not hasattr(settings, 'PROJECT_PARENT_DIR'):
-        settings.PROJECT_PARENT_DIR = os.path.dirname(settings.PROJECT_ROOT)
-
-    if not hasattr(settings, 'LOG_DIR'):
-        settings.LOG_DIR = defaults.LOG_DIR
-
-    if not hasattr(settings, 'CONFIG_GEN_TEMPLATES_DIR'):
-        settings.CONFIG_GEN_TEMPLATES_DIR = defaults.TEMPLATES_DIR
-
-    if not hasattr(settings, 'CONFIG_GEN_GENERATED_DIR'):
-        settings.CONFIG_GEN_GENERATED_DIR = defaults.GENERATED_DIR
-
-    if not hasattr(settings, 'CONFIG_GEN_CONTEXT_PROCESSORS'):
-        settings.CONFIG_GEN_CONTEXT_PROCESSORS = defaults.CONTEXT_PROCESSORS
-
-    if not hasattr(settings, 'HOST'):
-        settings.HOST = defaults.HOST
+    for setting, default in _names.items():
+        if not hasattr(settings, setting):
+            setattr(settings, setting, getattr(defaults, default))

@@ -19,6 +19,13 @@ matrix:
     - python: "3.5"
       env: DJANGO_VERSION=dj17
 
+cache:
+  directories:
+    - $HOME/.cache/pip
+
+before_cache:
+  - rm -f $HOME/.cache/pip/log/debug.log
+
 install:
     - pip install -U pip
     - pip install -U wheel virtualenv

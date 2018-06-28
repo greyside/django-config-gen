@@ -2,6 +2,8 @@
 django-config-gen
 =================
 
+**Maintenance/updates now handled by brillgen/django-config-gen:** https://github.com/brillgen/django-config-gen
+
 .. image:: https://travis-ci.org/greyside/django-config-gen.svg
     :target: https://travis-ci.org/greyside/django-config-gen
     :alt: CI
